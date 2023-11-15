@@ -1020,9 +1020,12 @@ let rec (translate_type_without_decay' :
       | FStar_Extraction_ML_Syntax.MLTY_Named ([], ("FStar"::m::[], "t'"))
           when is_machine_int m ->
           let uu___ = FStar_Compiler_Util.must (mk_width m) in TInt uu___
-      | FStar_Extraction_ML_Syntax.MLTY_Named (arg::[], p) when
-          let uu___ = FStar_Extraction_ML_Syntax.string_of_mlpath p in
-          uu___ = "FStar.Monotonic.HyperStack.mem" -> TUnit
+      | FStar_Extraction_ML_Syntax.MLTY_Named ([], p) when
+          (let uu___ = FStar_Extraction_ML_Syntax.string_of_mlpath p in
+           uu___ = "FStar.Monotonic.HyperStack.mem") ||
+            (let uu___ = FStar_Extraction_ML_Syntax.string_of_mlpath p in
+             uu___ = "FStar.Monotonic.HyperStack.mem'")
+          -> TUnit
       | FStar_Extraction_ML_Syntax.MLTY_Named (uu___::arg::uu___1::[], p)
           when
           (((let uu___2 = FStar_Extraction_ML_Syntax.string_of_mlpath p in
@@ -3119,7 +3122,7 @@ let (translate : FStar_Extraction_ML_Syntax.mllib -> file Prims.list) =
                      "Unable to translate module: %s because:\n  %s\n" m_name
                      uu___3);
                   FStar_Pervasives_Native.None)) modules
-let (uu___1714 : unit) =
+let (uu___1713 : unit) =
   register_post_translate_type_without_decay translate_type_without_decay';
   register_post_translate_type translate_type';
   register_post_translate_type_decl translate_type_decl';
