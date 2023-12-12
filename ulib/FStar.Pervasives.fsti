@@ -844,6 +844,9 @@ type __internal_ocaml_attributes =
     size. *)
 val inline_let : unit
 
+(** The [no_inline_let] XXX. *)
+val no_inline_let : unit
+
 (** The [rename_let] attribute support a form of metaprogramming for
     the names of let-bound variables used in extracted code.
 

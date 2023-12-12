@@ -373,6 +373,8 @@ let should_reduce_local_let cfg lb =
   else if cfg.steps.pure_subterms_within_computations &&
           U.has_attribute lb.lbattrs PC.inline_let_attr
   then true //1. we're extracting, and it's marked @inline_let
+  else if U.has_attribute lb.lbattrs PC.no_inline_let_attr
+  then false //2. it's explicitly marked as no-inline
   else
     let n = Env.norm_eff_name cfg.tcenv lb.lbeff in
     if U.is_pure_effect n &&
